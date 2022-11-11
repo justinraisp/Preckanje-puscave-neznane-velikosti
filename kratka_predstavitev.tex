@@ -1,0 +1,101 @@
+\documentclass{beamer}
+
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage[slovene]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage{ulem}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage[]{amsthm}
+
+\usetheme{berlin}
+\useinnertheme[shadows]{rounded}
+\useoutertheme[]{infolines}
+\beamertemplatenavigationsymbolsempty
+
+\usepackage{palatino}
+\usefonttheme{serif}
+
+\title{Prečkanje puščave neznane velikosti}
+\subtitle{Diplomski seminar}
+\author[Justin Raišp]{Justin Raišp \\ \footnotesize Mentor: izr. prof. dr. David Dolžan}
+\institute[FMF]{Fakulteta za matematiko in fiziko}
+\date{21. 11. 2022}
+
+\newtheorem{definicija}[]{Definicija}[]
+\newtheorem{izrek}{Izrek}
+\newtheorem{lema}{Lema}
+
+%\qedhere
+
+\begin{document}
+
+% ===================================================================
+\frame{\titlepage}
+
+% -------------------------------------------------------------------
+\section{Uvod}
+
+% -------------------------------------------------------------------
+\begin{frame}
+   \frametitle{Predstavitev problema}
+    Potrebno je prečkati puščavo neznane velikosti, pri čemer imamo na začetku na voljo neomejeno količino goriva, 
+    vendar imamo končen rezervoar za gorivo v avtu. Brez škode za splošnost predpostavimo:
+    \begin{itemize}
+        \item rezervoar ima kapaciteto $1$ liter goriva,
+        \item za $1$ kilometer potrebujemo $1$ liter goriva,
+        \item poraba goriva je konstantna skozi celotno pot.
+    \end{itemize}
+    Zanima nas optimalna strategija postavljanja postaj z gorivom, da dosežemo cilj, pri čemer porabimo čim manjšo količino goriva.
+\end{frame}
+% ===================================================================
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Že rešeni problemi}
+    Prečkanje puščave je v matematiki znan problem, ki se je prvič pojavil že v 9. stoletju, trenutna različica 
+    problema pa se je pojavila v letu 1947 s strani Nathan Jacob Fine-a, vendar so ti problemi predpostavljali, da 
+    poznamo širino dane puščave.
+ \end{frame}
+ % -------------------------------------------------------------------
+ \section{Reševanje problema}
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+     \frametitle{Ideja}
+     Z $n$ označimo količino goriva.
+     \begin{itemize}
+        \item $n = 1$: Peljemo se $\frac{1}{2}$ in se vrnemo na začetek
+        \item $n = 2$: Peljemo se $\frac{1}{4}$, shranimo $\frac{1}{2}$ in se vrnemo. Nato se peljemo $\frac{1}{4}$, poberemo $\frac{1}{4}$, se peljemo 
+        $\frac{1}{2}$, se vrnemo in po poti poberemo $\frac{1}{4}$,
+        \item $n = 3$: Peljemo se $\frac{1}{6} + \frac{1}{4} + \frac{1}{2}$ in se vrnemo, vmes imamo $2$ postaji,
+        \item[{$\vdots$}]
+        \item $n = k$: Peljemo se $\frac{1}{2k} + \frac{1}{2(k-1)} + \dots + \frac{1}{4} + \frac{1}{2}$, vmes pa imamo $k - 1$ postaj.
+
+     \end{itemize}
+
+ \end{frame}
+ 
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Ideja}
+    Ker imamo pot v obe smeri, pomeni da prevozimo  
+    $$2\sum_{n=1}^{k} \frac{1}{2n} = \sum_{n=1}^{k} \frac{1}{n},$$
+    kar nam da harmonično vrsto, katera divergira ko $k \to \infty$, torej lahko prevozimo 
+    vsakršno razdaljo. $k$-to delno vsoto harmonične vrste lahko aproksimiramo z 
+    $$\sum_{n=1}^{k} \frac{1}{n} \approx ln(k) + \gamma,$$ kjer je $\gamma \approx 0.577$ Euler-Macheronijeva konstanta.
+    Torej lahko ocenimo, da za $d$ kilometrov in nazaj, potrebujemo $O(e^{2d})$ litrov goriva. Torej za velike $d$, je cena 
+    goriva za razdaljo $d$ sorazmerna $7.389^d$.
+\end{frame}
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+
+\end{frame}
+
+
+\end{document}
