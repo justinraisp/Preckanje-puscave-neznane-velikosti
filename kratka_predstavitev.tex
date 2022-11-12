@@ -62,7 +62,7 @@
     poznamo širino dane puščave.
  \end{frame}
  % -------------------------------------------------------------------
- \section{Reševanje problema}
+ \section{Reševanje problema} 
 
  % -------------------------------------------------------------------
  \begin{frame}
@@ -94,8 +94,46 @@
 
  % -------------------------------------------------------------------
  \begin{frame}
-
+    \frametitle{Učinkovitost strategije}
+    Učinkovitost strategije ocenimo s "worst case competitive ratio", ki je značilen za ocenjevanje učinkovitosti pri 
+    problemih, kjer ključne informacije niso znane vnaprej. Definiran je kot: 
+    $$\frac{\text{Najvišja cena z danim algoritmom}}{\text{Optimalna cena, če poznamo razdaljo apriori}} $$
 \end{frame}
 
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    Najpreprostejši način reševanja tega problema bi bile enakomerno razporejene postaje z gorivom. Ideja je, da se ž
+    premikamo naprej dokler je možno. Definiramo \textbf{razvrščanje naprej}: predpostavimo, da smo na postaji in s $p$ 
+    označimo razdaljo do predhodne postaje in trenutno količino goriva, vključno z gorivmo na postaji s $f$. Če velja 
+    $f - p \geq 1$, gremo naprej s polnim rezervoarjem. Sicer se vrnemo s $p$ litri goriva. 
+\end{frame}
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    \begin{izrek}
+        Pri razvrščanju naprej z enakoremo razporejenimi postajami $\frac{1}{k}$ narazen, asimptotična
+        cena za doseganje dane razdalje raste eksponentno z razdaljo, in osnova eksponenta je omejena od spodaj z
+         $(\frac{k}{k-2})^k$
+    \end{izrek}
+\end{frame}
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Optimalnost}
+    Da se pokazati, da je razvrščanje naprej optimalna strategija. Vendar če imamo enakomerno razporejene 
+    postaje na razdaljah $\frac{1}{k}$, lahko učinkovitost povečamo, če dodamo na sredino vsakih dveh postaj novo postajo. 
+    Posledično z nobeno strategijo z enakomerno razporejenimi postajami za neznano razdaljo, ne dosežemo končnega "worst-case 
+    competitive ratio", saj je edini način da dosežemo stopnjo $e^{2}$, da $k$ pošljemo v neskončnost, kar bi 
+    pomenilo, da bi potrebovali neskončno količino goriva za katerokoli razdaljo od začetka.
+    \end{frame}
+
+% -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Iteracija}
+    V nadaljevanju se bom ukvarjal z iterativnim pristopom k temu problemu in kako s pomočjo iteracije 
+    določimo "worst-case competitive ratio"
+   \end{frame}
 
 \end{document}
