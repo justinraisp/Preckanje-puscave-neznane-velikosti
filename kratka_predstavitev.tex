@@ -103,11 +103,54 @@
  % -------------------------------------------------------------------
  \begin{frame}
     \frametitle{Enakomerno razporejene postaje}
-    Najpreprostejši način reševanja tega problema bi bile enakomerno razporejene postaje z gorivom. Ideja je, da se ž
-    premikamo naprej dokler je možno. Definiramo \textbf{razvrščanje naprej}: predpostavimo, da smo na postaji in s $p$ 
+    Najpreprostejši način reševanja tega problema bi bile enakomerno razporejene postaje z gorivom. Ideja je, da se
+    premikamo naprej dokler je možno. Definiramo \textbf{razvrščanje vnaprej}: predpostavimo, da smo na postaji in s $p$ 
     označimo razdaljo do predhodne postaje in trenutno količino goriva, vključno z gorivmo na postaji s $f$. Če velja 
     $f - p \geq 1$, gremo naprej s polnim rezervoarjem. Sicer se vrnemo s $p$ litri goriva. 
 \end{frame}
+
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    Za primer vzamemo enakomerno razporejene postaje na razdalji $\frac{1}{3}$.
+    \begin{itemize}
+        \item Povratna pot do prve postaje nas stane $\frac{1}{3}$ v vsako smer, vmes pa shranimo $\frac{1}{3}$ goriva,
+        \item Dve takšni poti nam omogočita $\frac{2}{3}$ goriva na prvi postaji,
+        \item Na tretji poti porabimo $\frac{1}{3}$ do prve postaje, vzamemo $\frac{1}{3}$, se peljemo do 
+                druge postaje, odložimo $\frac{1}{3}$, in se vrnemo na začetek z vmesno postajo na $\frac{1}{3}$.
+    \end{itemize}
+
+\end{frame}
+
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    Z $f(n)$ označimo začetno količino goriva, potrebnega za dostavo $\frac{1}{3}$ goriva do $n$-te 
+    postaje, s predpostavko, da so vse vmesne postaje prazne. Potem velja
+    \begin{itemize}
+        \item $f(1) = 1$,
+        \item $f(2) = 2 f(1) + 1 = 3$,
+        \item $f(3) = 2 f(2) + 2 f(1) + 1 = 9$
+        \item[{$\vdots$}]
+    \end{itemize}
+    Za $n$-to postajo dobimo formulo:
+        $$f(n) = 1 + \sum_{i=1}^{n-1} 2f(i) = 3^{n-1}$$
+    Torej, če imamo $3$ postaje na kilometer, nas povratna pot dolžine $d$ stane $3^{3d-1} = O(27^d)$.
+\end{frame}
+
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    Če postavimo postaje na razdalji  $\frac{1}{4}$ , nas povratna pot dolžine $d$ stane $O(16^d)$,
+    kar je veliko boljše kot $O(27^d)$, vendar veliko slabše kot $O(7.389^d)$, kar dobimo pri optimalni strategiji
+    pri znani razdalji. Zaradi večje eksponentne rasti teh strategij, je njihov konkurenčni kriterij neomejen.
+    Da se pokazati, da pri nobeni strategiji z enakomerno razporejenimi postajami ne moremo doseči končnega 
+    konkurenčnega razmerja.
+\end{frame}
+
 
  % -------------------------------------------------------------------
  \begin{frame}
@@ -122,10 +165,10 @@
  % -------------------------------------------------------------------
  \begin{frame}
     \frametitle{Optimalnost}
-    Da se pokazati, da je razvrščanje naprej optimalna strategija. Vendar če imamo enakomerno razporejene 
+    Da se pokazati, da je razvrščanje vnaprej optimalna strategija. Vendar če imamo enakomerno razporejene 
     postaje na razdaljah $\frac{1}{k}$, lahko učinkovitost povečamo, če dodamo na sredino vsakih dveh postaj novo postajo. 
-    Posledično z nobeno strategijo z enakomerno razporejenimi postajami za neznano razdaljo, ne dosežemo končnega "worst-case 
-    competitive ratio", saj je edini način da dosežemo stopnjo $e^{2}$, da $k$ pošljemo v neskončnost, kar bi 
+    Posledično z nobeno strategijo z enakomerno razporejenimi postajami za neznano razdaljo, ne dosežemo končnega "konkurenčno 
+    razmerje v najslabšem primeru", saj je edini način da dosežemo stopnjo $e^{2}$, da $k$ pošljemo v neskončnost, kar bi 
     pomenilo, da bi potrebovali neskončno količino goriva za katerokoli razdaljo od začetka.
     \end{frame}
 
@@ -133,7 +176,7 @@
  \begin{frame}
     \frametitle{Iteracija}
     V nadaljevanju se bom ukvarjal z iterativnim pristopom k temu problemu in kako s pomočjo dinamičnega programiranja  
-    določimo "worst-case competitive ratio".
+    določimo "konkurenčno razmerje v najslabšem primeru".
    \end{frame}
 
 % -------------------------------------------------------------------   
