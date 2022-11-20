@@ -100,19 +100,29 @@
     $$\frac{\text{Najvišja cena z danim algoritmom}}{\text{Optimalna cena, če poznamo razdaljo apriori}} $$
 \end{frame}
 
+
  % -------------------------------------------------------------------
  \begin{frame}
-    \frametitle{Enakomerno razporejene postaje}
-    Najpreprostejši način reševanja tega problema bi bile enakomerno razporejene postaje z gorivom. Ideja je, da se
-    premikamo naprej dokler je možno. Definiramo \textbf{razvrščanje vnaprej}: predpostavimo, da smo na postaji in s $p$ 
+    \frametitle{Razvrščanje vnaprej}
+    Definiramo \textbf{razvrščanje vnaprej}: predpostavimo, da smo na postaji in s $p$ 
     označimo razdaljo do predhodne postaje in trenutno količino goriva, vključno z gorivmo na postaji s $f$. Če velja 
-    $f - p \geq 1$, gremo naprej s polnim rezervoarjem. Sicer se vrnemo s $p$ litri goriva. 
+    $f - p \geq 1$, gremo naprej s polnim rezervoarjem. Sicer se vrnemo s $p$ litri goriva. Ideja je, da se
+    premikamo naprej dokler je možno. Definiramo \textit{skok} kot premikanje med dvema sosednjima postajama in
+    \textit{izlet} kot pot od začetka do določene postaje in nazaj.
 \end{frame}
 
+ % -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Razvrščanje vnaprej}
+    \begin{lema}
+        Razvrščanje skokov vnaprej je optimalna strategija.
+    \end{lema}
+\end{frame}
 
  % -------------------------------------------------------------------
  \begin{frame}
     \frametitle{Enakomerno razporejene postaje}
+    Najpreprostejši način reševanja tega problema bi bile enakomerno razporejene postaje z gorivom.  \\
     Za primer vzamemo enakomerno razporejene postaje na razdalji $\frac{1}{3}$.
     \begin{itemize}
         \item Povratna pot do prve postaje nas stane $\frac{1}{3}$ v vsako smer, vmes pa shranimo $\frac{1}{3}$ goriva,
@@ -120,7 +130,6 @@
         \item Na tretji poti porabimo $\frac{1}{3}$ do prve postaje, vzamemo $\frac{1}{3}$, se peljemo do 
                 druge postaje, odložimo $\frac{1}{3}$, in se vrnemo na začetek z vmesno postajo na $\frac{1}{3}$.
     \end{itemize}
-
 \end{frame}
 
 
