@@ -95,7 +95,7 @@
  % -------------------------------------------------------------------
  \begin{frame}
     \frametitle{Učinkovitost strategije}
-    Učinkovitost strategije ocenimo s "worst case competitive ratio", ki je značilen za ocenjevanje učinkovitosti pri 
+    Učinkovitost strategije ocenimo s "konkurenčnim razmerjem v najslabšem primeru", ki je značilen za ocenjevanje učinkovitosti pri 
     problemih, kjer ključne informacije niso znane vnaprej. Definiran je kot: 
     $$\frac{\text{Najvišja cena z danim algoritmom}}{\text{Optimalna cena, če poznamo razdaljo apriori}} $$
 \end{frame}
@@ -162,13 +162,25 @@
     \end{izrek}
 \end{frame}
 
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    \begin{lema}
+        Pri razvrščanju vnaprej, za katerikoli sosednji postaji velja, da lahko vedno izboljšamo učinkovitost 
+        tako, da med njima postavimo novo postajo. Optimalna pozicija za novo postajo je na sredini med danima 
+        postajama.
+    \end{lema}
+\end{frame}
+
+
  % -------------------------------------------------------------------
  \begin{frame}
     \frametitle{Optimalnost}
     Da se pokazati, da je razvrščanje vnaprej optimalna strategija. Vendar če imamo enakomerno razporejene 
-    postaje na razdaljah $\frac{1}{k}$, lahko učinkovitost povečamo, če dodamo na sredino vsakih dveh postaj novo postajo. 
-    Posledično z nobeno strategijo z enakomerno razporejenimi postajami za neznano razdaljo, ne dosežemo končnega "konkurenčno 
-    razmerje v najslabšem primeru", saj je edini način da dosežemo stopnjo $e^{2}$, da $k$ pošljemo v neskončnost, kar bi 
+    postaje na razdaljah $\frac{1}{k}$, nam lema pokaže, da lahko učinkovitost povečamo, če dodamo na sredino vsakih dveh postaj novo postajo. 
+    Posledično z nobeno strategijo z enakomerno razporejenimi postajami za neznano razdaljo, ne dosežemo končnega "konkurenčnega
+    razmerja v najslabšem primeru", saj je edini način da dosežemo stopnjo $e^{2}$, da $k$ pošljemo v neskončnost, kar bi 
     pomenilo, da bi potrebovali neskončno količino goriva za katerokoli razdaljo od začetka.
     \end{frame}
 
@@ -176,7 +188,7 @@
  \begin{frame}
     \frametitle{Iteracija}
     V nadaljevanju se bom ukvarjal z iterativnim pristopom k temu problemu in kako s pomočjo dinamičnega programiranja  
-    določimo "konkurenčno razmerje v najslabšem primeru".
+    določimo končno "konkurenčno razmerje v najslabšem primeru".
    \end{frame}
 
 % -------------------------------------------------------------------   
