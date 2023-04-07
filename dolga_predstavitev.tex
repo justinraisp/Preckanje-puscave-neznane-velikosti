@@ -1,0 +1,492 @@
+\documentclass{beamer}
+
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+}
+
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{tikz}
+\usepackage[slovene]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage{ulem}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage[]{amsthm}
+
+%\usetheme{berlin}
+%\useinnertheme[shadows]{rounded}
+\useoutertheme[]{infolines}
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{theorems}[numbered]
+\usepackage{palatino}
+\usefonttheme{serif}
+
+
+\makeatletter
+\newenvironment<>{proofs}[1][\proofname]{%
+    \par
+    \def\insertproofname{#1\@addpunct{.}}%
+    \usebeamertemplate{proof begin}#2}
+  {\usebeamertemplate{proof end}}
+\makeatother
+
+
+\title{Prečkanje puščave neznane velikosti}
+\subtitle{Diplomski seminar}
+\author[Justin Raišp]{Justin Raišp \\ \footnotesize Mentor: izr. prof. dr. David Dolžan}
+\institute[FMF]{Fakulteta za matematiko in fiziko}
+\date{13. 4. 2023}
+
+\newtheorem{definicija}[]{Definicija}[]
+\newtheorem{izrek}{Izrek}
+\newtheorem{lema}{Lema}
+\newtheorem{dokaz}{Dokaz}
+
+%\qedhere
+
+\begin{document}
+
+% ===================================================================
+\frame{\titlepage}
+
+
+% -------------------------------------------------------------------
+\section{Uvod}
+
+% -------------------------------------------------------------------
+\begin{frame}
+   \frametitle{Predstavitev problema}
+    Potrebno je prečkati puščavo neznane velikosti, pri čemer imamo na začetku na voljo neomejeno količino goriva, 
+    vendar imamo končen rezervoar za gorivo v avtu. Brez škode za splošnost predpostavimo:
+    \begin{itemize}
+        \item rezervoar ima kapaciteto $1$ liter goriva,
+        \item za $1$ kilometer potrebujemo $1$ liter goriva,
+        \item poraba goriva je konstantna skozi celotno pot.
+    \end{itemize}
+    Zanima nas optimalna strategija postavljanja postaj z gorivom, da dosežemo cilj, pri čemer porabimo čim manjšo količino goriva.
+\end{frame}
+% ===================================================================
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Pojavitev problema}
+    Prečkanje puščave je v matematiki znan problem, ki se je prvič pojavil že v 9. stoletju, trenutna različica 
+    problema pa se je pojavila v letu 1947 s strani Nathan Jacob Fine-a, vendar so ti problemi predpostavljali, da 
+    poznamo širino dane puščave.
+ \end{frame}
+ % ------------------------------------------------------------------- 
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+     \frametitle{Ideja}
+     Z $n$ označimo količino goriva.
+     \begin{itemize}
+        \item $n = 1$: Peljemo se $\frac{1}{2}$ in se vrnemo na začetek
+        \item $n = 2$: Peljemo se $\frac{1}{4}$, shranimo $\frac{1}{2}$ in se vrnemo. Nato se peljemo $\frac{1}{4}$, poberemo $\frac{1}{4}$, se peljemo 
+        $\frac{1}{2}$, se vrnemo in po poti poberemo $\frac{1}{4}$,
+        \item $n = 3$: Peljemo se $\frac{1}{6} + \frac{1}{4} + \frac{1}{2}$ in se vrnemo, vmes imamo $2$ postaji,
+        \item[{$\vdots$}]
+        \item $n = k$: Peljemo se $\frac{1}{2k} + \frac{1}{2(k-1)} + \dots + \frac{1}{4} + \frac{1}{2}$, vmes pa imamo $k - 1$ postaj.
+
+     \end{itemize}
+
+ \end{frame}
+ 
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Ideja}
+    Ker imamo pot v obe smeri, pomeni da prevozimo  
+    $$2\sum_{n=1}^{k} \frac{1}{2n} = \sum_{n=1}^{k} \frac{1}{n},$$
+    kar nam da harmonično vrsto, katera divergira ko $k \to \infty$, torej lahko prevozimo 
+    vsakršno razdaljo. $k$-to delno vsoto harmonične vrste lahko aproksimiramo z 
+    $$\sum_{n=1}^{k} \frac{1}{n} \approx ln(k) + \gamma,$$ kjer je $\gamma \approx 0.577$ Euler-Macheronijeva konstanta.
+    Torej lahko ocenimo, da za $d$ kilometrov in nazaj, potrebujemo $O(e^{2d})$ litrov goriva. Torej za velike $d$, je cena 
+    goriva za razdaljo $d$ sorazmerna $7.389^d$. V primeru znane razdalje, je to optimalna rešitev.
+\end{frame}
+
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Učinkovitost strategije}
+    Učinkovitost strategije ocenimo s "konkurenčnim razmerjem v najslabšem primeru", ki je značilen za ocenjevanje učinkovitosti pri 
+    problemih, kjer ključne informacije niso znane vnaprej. Definiran je kot: 
+    $$\frac{\text{Najvišja cena z danim algoritmom glede na vse možne razdalje}}{O(e^{2d})} $$
+\end{frame}
+
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Razvrščanje vnaprej}
+    Definiramo \textbf{razvrščanje skokov vnaprej}: predpostavimo, da smo na postaji in s $p$ 
+    označimo razdaljo do predhodne postaje in trenutno količino goriva, vključno z gorivom na postaji s $f$. Če velja 
+    $f - p \geq 1$, gremo naprej s polnim rezervoarjem. Sicer se vrnemo s $p$ litri goriva. Ideja je, da se
+    premikamo naprej dokler je možno. Definiramo \textit{skok} kot premikanje med dvema sosednjima postajama in
+    \textit{izlet} kot pot od začetka do določene postaje in nazaj.
+\end{frame}
+
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    Najpreprostejši način reševanja tega problema bi bile enakomerno razporejene postaje z gorivom.  \\
+    Za primer vzamemo enakomerno razporejene postaje na razdalji $\frac{1}{3}$.
+    \begin{itemize}
+        \item Povratna pot do prve postaje nas stane $\frac{1}{3}$ v vsako smer, vmes pa shranimo $\frac{1}{3}$ goriva,
+        \item Dve takšni poti nam omogočita $\frac{2}{3}$ goriva na prvi postaji,
+        \item Na tretji poti porabimo $\frac{1}{3}$ do prve postaje, vzamemo $\frac{1}{3}$, se peljemo do 
+                druge postaje, odložimo $\frac{1}{3}$, in se vrnemo na začetek z vmesno postajo na $\frac{1}{3}$.
+    \end{itemize}
+\end{frame}
+
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    Z $f(n)$ označimo začetno količino goriva, potrebnega za dostavo $\frac{1}{3}$ goriva do $n$-te 
+    postaje, s predpostavko, da so vse vmesne postaje prazne. Potem velja
+    \begin{itemize}
+        \item $f(1) = 1$,
+        \item $f(2) = 2 f(1) + 1 = 3$,
+        \item $f(3) = 2 f(2) + 2 f(1) + 1 = 9$
+        \item[{$\vdots$}]
+    \end{itemize}
+    Za $n$-to postajo dobimo formulo:
+        $$f(n) = 1 + \sum_{i=1}^{n-1} 2f(i) = 3^{n-1}$$
+    Torej, če imamo $3$ postaje na kilometer, nas povratna pot dolžine $d$ stane $3^{3d-1} = O(27^d)$.
+\end{frame}
+
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    Če postavimo postaje na razdalji  $\frac{1}{4}$ , nas povratna pot dolžine $d$ stane $O(16^d)$,
+    kar je veliko boljše kot $O(27^d)$, vendar veliko slabše kot $O(7.389^d)$, kar dobimo pri optimalni strategiji
+    pri znani razdalji. Zaradi večje eksponentne rasti teh strategij, je njihov konkurenčni kriterij neomejen.
+    Da se pokazati, da pri nobeni strategiji z enakomerno razporejenimi postajami ne moremo doseči končnega 
+    konkurenčnega razmerja.
+\end{frame}
+
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    \begin{izrek}
+        Pri razvrščanju naprej z enakomerno razporejenimi postajami $\frac{1}{k}$ narazen, asimptotična
+        cena za doseganje dane razdalje raste eksponentno z razdaljo, in osnova eksponenta je omejena od spodaj z
+         $(\frac{k}{k-2})^k$
+    \end{izrek}
+\end{frame}
+
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Razvrščanje vnaprej}
+    \begin{lema}
+        Razvrščanje skokov vnaprej je optimalna strategija.
+    \end{lema}
+\end{frame}
+
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Razvrščanje vnaprej}
+    \begin{Proof}
+        Pogledamo poljubne tri sosednje postaje $x$, $y$ in $z$, pri čemer je $x$ najbližja začetku. Pri poljubni rešitvi danega problema, bo določeno število skokov med $x$ in 
+        $y$ ter med $y$ in $z$. V optimalni rešitvi se bo vsak skok začel s polnim rezervoarjem. Število skokov je določeno s količino goriva potrebnega v $z$. 
+        Neodvisno od zaporedja skokov je končno število skokov od $x$ do $y$ in od $y$ do $z$ enako $\Leftrightarrow$ v $y$ je vedno dovolj goriva, da potujemo do $z$ s polmin rezervoarjem. 
+        Razvrščanje vnaprej upošteva to omejitev, torej je optimalna strategija.
+    \end{Proof}
+\end{frame}
+
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    \begin{definicija}
+        Učinkovitost prenosa goriva je definirana kot količina goriva dodanega k zadnji postaji, pomnožena z razdaljo od izhodišča do cilja, deljena s 
+        količino goriva, ki smo jo odvzeli iz izhodišča.
+
+    \end{definicija}
+    \begin{lema}
+        Pri razvrščanju vnaprej, za katerikoli sosednji postaji velja, da lahko vedno izboljšamo učinkovitost 
+        tako, da med njima postavimo novo postajo. Optimalna pozicija za novo postajo je na sredini med danima 
+        postajama.
+    \end{lema}
+    
+\end{frame}
+
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    \begin{lema}
+        V primeru neznane razdalje bodo postaje v optimalni rešitvi med seboj enako oddaljene.
+    \end{lema}
+\end{frame}
+
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    \begin{Proof}
+        Predpostavimo, da imamo optimalno rešitev z neenakomerno postavljenimi postajami. Potem obstajajo $x, y, z$, kjer je razdalja med $x$ in $y$ 
+        različna od razdalje med $y$ in $z$. Prejšnja lema nam pove, da se da izboljšati učinkovitost tako, da $y$ prestavimo na sredino med $x$ in $z$. 
+        Torej se našo optimalno rešitev da izboljšati in dobimo protislovje.
+    \end{Proof}
+\end{frame}
+
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    \begin{izrek}
+        Nobena strategija za neznano razdaljo s fiksnim zaporedjem postaj ne more doseči končnega konkurenčnega razmerja.
+    \end{izrek}
+\end{frame}
+
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Enakomerno razporejene postaje}
+    \begin{Proof}
+        Predpostavimo, da imamo optimalno strategijo za neznano razdaljo s fiksnim zaporedjem postaj. Lema 2 nam pove, da lahko 
+        razvrstimo te postaje z razvrščanjem vnaprej, brez da bi izgubili učinkovitost. Lema 4 nam pove, da morajo biti postaje enakomerno 
+        oddaljene med seboj. Izrek 1 nam pa pove, da se stroški razvrščanja vnaprej s postajami oddaljenimi $\frac{1}{k}$ večajo eksponentno. 
+        Ker je osnova eksponenta za to strategijo vsaj $(\frac{k}{k-2})^k$ in za $\forall k > 2$ velja: 
+        $$ \left (\frac{k}{k-2} \right )^k > e^2,$$
+        dobimo neomejeno konkurenčno razmerje v najslabšem primeru.
+
+    \end{Proof}
+\end{frame}
+
+
+ % -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Optimalnost}
+    Da se pokazati, da je razvrščanje vnaprej optimalna strategija. Vendar če imamo enakomerno razporejene 
+    postaje na razdaljah $\frac{1}{k}$, nam lema pokaže, da lahko učinkovitost povečamo, če dodamo na sredino vsakih dveh postaj novo postajo. 
+    Posledično z nobeno strategijo z enakomerno razporejenimi postajami za neznano razdaljo, ne dosežemo končnega "konkurenčnega
+    razmerja v najslabšem primeru", saj je edini način da dosežemo stopnjo $e^{2}$, da $k$ pošljemo v neskončnost, kar bi 
+    pomenilo, da bi potrebovali neskončno količino goriva za katerokoli razdaljo od začetka.
+    \end{frame}
+
+% -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Iteracija}
+    Če zaporedje postaj ni fiksno, se mora skozi potovanje spreminjati. Nesmiselno je spreminjati postaje, ki so dlje od naše trenutne točke, saj bi bilo enako, če bi 
+    bile spremenjene od začetka. Če dodamo nove postaje na že prevoženo pot, nam lema 2 pove, da je bolj učinkovito, če vključimo te postaje že na začetku. Podobno velja za odstranjevanje 
+    postaj. Edina preostala možnost je, da delamo iteracije, s katerimi dosežemo vedno daljšo razdaljo, pri čemer odstranimo vso gorivo predhodnih iteracij.
+   \end{frame}
+
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Iteracija}
+    Za $n$-to iteracijo definiramo konkurenčno razmerje, povezano z iskanjem cilja v vsaki iteraciji kot:
+    $$ \frac{\text{Vsota cen prvih $n$ iteracij}}{\text{Cena $(n-1)$-te iteracije}}$$
+    \begin{lema}
+        Obstaja optimalna iterativna strategija, kjer so konkurenčna razmerja povezana z iskanjem cilja v vsaki iteraciji, enaka.
+    \end{lema}
+   \end{frame}
+
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Iteracija}
+    \begin{lema}
+        V iterativni strategiji z enakimi konkurenčnimi razmerji imamo padajoče zaporedje multiplikatorjev, od $m_2$ dalje.
+    \end{lema}
+   \end{frame}
+
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Iteracija}
+    \begin{izrek}
+        Ena izmed optimalnih strategij, merjene glede na konkurenčno razmerje v najslabšem primeru, je iterativna 
+        strategija, ki podvoji strošek vsake zaporedne iteracije in ima konkurenčno razmerje enako $4$.
+    \end{izrek}
+   \end{frame}
+
+   
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Iteracija}
+    \begin{proofs}
+        Pokazali smo, da je edina optimalna alternativa fiksnemu zaporedju postaj iterativna strategija, ki uporablja
+        optimalno strategijo za znano razdaljo, za doseganje vedno večjih razdalj. Lema 4 nam pove, da če obstaja optimalna iterativna 
+        strategija, potem imamo optimalno strategijo, ker so vsa konkurenčna razmerja enaka. Lema 5 nam pove, da imamo v tem primeru 
+        padajoče zaporedje multiplikatorjev iteracij. Multiplikatorji morejo biti vsi večji od $1$, saj mora vsaka iteracija premagati večjo razdaljo. 
+        Torej mora zaporedje multiplikatorjev konvergirati k limiti, ki je večja ali enaka $1$. Konkurenčno razmerje za dano iteracijo lahko zapišemo kot 
+        vsoto členov, ki vsebujejo multiplikator za to iteracijo, število $1$ ter zaporedje, kjer so členi recipročne vrednosti produkta vedno daljšega zaporedja multiplikatorjev.
+    \end{proofs}
+    \end{frame}
+
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Iteracija}
+    \begin{proofs}
+        Upoštevamo tri primere: 
+        \begin{enumerate}
+            \item multiplikatorji konvergirajo k $1$ in njihov produkt konvergira h končnemu številu,
+            \item multiplikatorji konvergirajo k $1$ in njihov produkt je neomejen,
+            \item multiplikatorji konvergirajo k številu večjemu od $1$, torej je njihov produkt neomejen.
+        \end{enumerate}
+        V prvem primeru recipročne vrednosti produkta konvergirajo k neničelnemu številu. Konkurenčna razmerja so vsota teh recipročnih vrednosti in, ker je lahko neskončno število 
+        iteracij, bo konkurenčno razmerje neomejeno. To pomeni, da to ni optimalno, saj lahko dosežemo končno razmerje. 
+
+    \end{proofs}
+   \end{frame}
+
+
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Iteracija}
+    \begin{Proof}
+        V drugem in tretjem primeru produkti rastejo čez vse meje, torej 
+        gredo njihove recipročne vrednosti proti ničli. Torej se členi, ki vključujejo začetne multiplikatorje, bližajo proti nič in njihovo konkurenčno razmerje 
+        je določeno z limito multiplikatorjev $m$. \\
+        Konkurenčno razmerje je vsota $m + 1 + \frac{1}{m} + \frac{1}{m^2} + \frac{1}{m^3} + \dots$. Ker vemo, da je $m > 1$, vrsta 
+        $\sum_{i=0}^{\infty} m^{-i}$ konvergira in dobimo konkurenčno razmerje kot $$m + \sum_{i=0}^{\infty} m^{-i} = m + \frac{m}{m-1} = \frac{m^2}{m-1}.$$
+        Ta izraz odvajamo in enačimo z nič in dobimo vrednost $m = 2$ ter naše konkurenčno razmerje, ki je enako $4$.
+    \end{Proof}
+\end{frame}
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Iteracija}
+    Želimo z vsako iteracijo podvojit ceno prejšnje iteracije in nas zanima koliko se v tem primeru podaljša naša pot glede na prejšnjo iteracijo. \\
+    Za doseganje razdalje $d$ potrebujemo $O(e^{2d})$ goriva, torej za doseganje
+    $x + d$ potrebujemo $O(e^{2(d+x)})$. To nam da enačbo: 
+    $$ 2e^{2d} = e^{2(d+x)} \Leftrightarrow x = \frac{ln2}{2} \approx 0.3465736$$
+    Torej je ena izmed optimalnih strategij niz iteracij, kjer je vsaka iteracija za nekaj več kot tretjino daljša 
+    od prejšnje.
+\end{frame}
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Prvih 12 iteracij strategije podvajanja}
+    \begin{table}
+        \centering
+        \begin{tabular}{cccccc}
+        \toprule
+        Iter. & Gorivo & Razdalja & Dodana razd. & Konk. raz. & Raz. goriva \\
+        \midrule
+        1 & 1 & 0.5 & & &  \\
+        2 & 2 & 0.75 & 0.25 & 2.5 &  \\
+        3 & 4 & 1.041667 & 0.291667 & 3.208333 & 2 \\
+        4 & 8 & 1.358929 & 0.317262 & 3.591369 & 2 \\
+        5 & 16 & 1.690364 & 0.331435 & 3.792141 & 2 \\
+        6 & 32 & 2.029248 & 0.338884 & 3.89514 & 2 \\
+        7 & 64 & 2.371945 & 0.342697 & 3.947331 & 2 \\
+        8 & 128 & 2.716574 & 0.344629 & 3.973605 & 2 \\
+        9 & 256 & 3.062172 & 0.345598 & 3.986788 & 2 \\
+        10 & 512 & 3.408258 & 0.346086 & 3.99339 & 2 \\
+        11 & 1024 & 3.754588 & 0.34633 & 3.996694 & 2 \\
+        12 & 2048 & 3.754588 & 0.34633 & 3.998347 & 2 \\
+        \bottomrule
+        \end{tabular}
+        \end{table}
+\end{frame}
+
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Optimalna začetna iteracija}
+    Preprosto strategijo podvajanja lahko nekoliko izboljšamo tako, da z vsako novo iteracijo dosežemo nekoliko daljšo razdaljo kot $\frac{ln2}{2}$ in še vedno dosežemo najslabše konkurenčno razmerje 4. Da izračunamo konkurenčno razmerje, 
+    ocenimo stroške iteracije kot skupno prevoženo razdaljo do cilja in nazaj, namesto količino goriva odstranjenega z začetka.
+    
+\end{frame}
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Optimalna začetna iteracija}
+    \begin{itemize}
+        \item Najdaljša prva iteracija s konkurenčnim razmerjem 4 ali manj porabi $8l$, da doseže $1,3589 km$. V najslabšem primeru je cilj tik za $5.$ postajo, $0,44226km$ od izhodišča.
+        \item Druga iteracija porabi $25l$, da doseže $1,908km$. Ker je to več kot $1/2km$ dlje kot prejšnja, ta iteracija ne doseže zadnje postaje, s čimer prihrani nekaj več kot liter goriva. In ker velja 
+                $(8+24)/8 = 4$, je konkurenčno razmerje te iteracije manjše od $4$.
+    \end{itemize}
+
+\end{frame}
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Optimalna začetna iteracija}
+    Pri vsaki naslednji iteraciji je v najslabšem primeru cilj najden tik za zadnjo postajo, s čimer se prihrami manj kot $1l$. Na primer skupni stroški prvih treh iteracij skoraj $8 + 25 + 67 = 100$, cilj 
+    pa je najden tik za območjem druge iteracije. Torej je konkurenčno razmerje malo manjše od $100/25 = 4$.
+    \\ 
+    Ko večamo zaporedje iteracij vidimo, da se razmerje med gorivom dveh zaporednih iteracij bliža k $2$, Konkurenčna razmerja pa k $4$.
+\end{frame}
+
+% -------------------------------------------------------------------
+\begin{frame}
+    \frametitle{Prvih 10 iteracij v izboljšani strategiji}
+    \begin{table}
+        \centering
+        \begin{tabular}{cccccc}
+        \toprule
+        Iter. & Gorivo & Razdalja & Dodana razd. & Konk. raz. & Raz. goriva \\
+        \midrule
+        1 & 8 & 1.358929 & & 3.652759 &  \\
+        2 & 25 & 1.907979 & 0.549051 & 3.987737 & 3.125000 \\
+        3 & 67 & 2.394676 & 0.486697 & 3.961064 & 2.680000 \\
+        4 & 168 & 2.852076 & 0.457400 & 3.986346 & 2.507463 \\
+        5 & 404 & 3.289934 & 0.437858 & 3.994787 & 2.404762 \\
+        6 & 944 & 3.713936 & 0.424002 & 3.997901 & 2.336634 \\
+        7 & 2160 & 4.127655 & 0.413719 & 3.999123 & 2.288136 \\
+        8 & 4864 & 4.533467 & 0.405812 & 3.999624 & 2.251852 \\
+        9 & 10816 & 4.933022 & 0.399555 & 3.999836 & 2.223684 \\
+        10 & 23808 & 5.327507 & 0.394485 & 3.999927 & 2.201183 \\
+        \bottomrule
+        \end{tabular}
+        \end{table}
+\end{frame}
+
+
+
+% -------------------------------------------------------------------
+%\begin{frame}
+%    \frametitle{Optimalna začetna iteracija}
+%    Prva iteracija ima eno postajo. Naslednja iteracija ima lahko $7$ postaj, saj bi v najslabšem primeru cilj lahko našli samo z dvema postajama, stroški pa ne smejo preseči 
+%    $1+7=8$, saj $\frac{1+7}{8} = 4$. Tretja iteracija pa ima lahko $24$ postaj, saj je skupna cena $1+7+24=32$ in, ker lahko v najslabšem primeru dosežemo cilj z osmimi postajami, dobimo 
+%    $\frac{1+7+24}{8}=4$. Če z $x_i$ označimo število postaj za $i$-to iteracijo, dobimo zvezo: 
+%    $$x_n = 4(x_{n-1}+1) - \sum_{i=1}^{n-1} x_i,$$ in velja $\frac{x_n}{x_{n-1}} \searrow 2,$ ko pošljemo $n$ v neskončnost.
+%\end{frame}
+
+% -------------------------------------------------------------------
+%\begin{frame}
+%    \frametitle{Optimalna začetna iteracija}
+%    Če pogledamo razmerje med zaporednima iteracijama:
+%    $$ \frac{x_n}{x_{n-1}} $$
+%\end{frame}
+
+% -------------------------------------------------------------------   
+\section{Zaključek} 
+% -------------------------------------------------------------------
+ \begin{frame}
+    \frametitle{Literatura}
+    \begin{thebibliography}{9}
+        \bibitem{A jeep crostting a desert of unknown width}
+        Richard E. Korf (2022) \textit{A Jeep Crossing a Desert of Unknown Width}, The
+        American Mathematical Monthly, 129:5, 435-444, DOI: 10.1080/00029890.2022.2051404
+        
+        \bibitem{A jeep crostting a desert of unknown width (Extended Abstract)}
+        Richard E. Korf (2022) \textit{A Jeep Crossing a Desert of Unknown Width (Extended Abstract)}, DOI: https://doi.org/10.1609/socs.v15i1.21791
+
+        \bibitem{Harmonic series}
+        Weisstein, Eric W, \textit{Harmonic Series}, [ogled 11. 11. 2022], dostopno na \url{https://mathworld.wolfram.com/HarmonicSeries.html}
+        \end{thebibliography}
+   \end{frame}
+\end{document}

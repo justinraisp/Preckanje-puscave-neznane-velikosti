@@ -1,0 +1,47 @@
+PREČKANJE PUŠČAVE NEZNANE VELIKOSTI
+
+Povzetek
+Klasična težava z avtom za prečkanje puščave šišre kot je naš domet avtomobila, se nanaša na problem, kjer vnaprej poznamo velikost puščave.
+Rešitev in optimalne strategije za ta problem in njegove variacije so dobre znane, vendar je vedno predpostavljeno, da razdaljo vnaprej poznamo.
+Mi rešujemo problem, ko razdalje ne poznamo vnaprej. Strategijo ocenjujemo po njenem konkurenčnem razmerju, ki je definiran kot razmerje med stroški najslabše možnega scenarija in stroški
+optimalne rešitve, če bi razdaljo poznali vnaprej. Pokazali bomo/smo, da nobena strategija s fiksnim zaporedjem postaj, ne more doseči končnega konkurenčnega razmerja.
+Optimalna strategija je iterativna strategija, ki uporablja optimalno strategijo za znano širino, da doseže ciljne razdalje in izprazni vse postaje med iteracijami.
+Optimalna iterativna strategija podvoji stroške vsake uspešne zaporedne iteracije in doseže konkurenčno razmerje štiri.
+
+UVOD
+Imamo avtomobil z določeno prostornino goriva in določeno razdaljo, ki jo lahko prevozi s polnim tankom. BŠS lahko predpostavimo, da lahko avto nosi en liter goriva in, da 
+lahko prevozi en kilometer na en liter goriva. Predpostavljamo, da je širina puščave večja kot en kilometer. Na začetku imamo neomejeno količino goriva, ki ga lahko poljubno shranimo
+na poti. Naš cilj je minimanizirati stroške potovanja, ki jih merimo kot porabljeno količino goriva za dano razdaljo. To označimo kot zgornjo mejo prevožene razdalje in preostalo gorivo na postajah.
+Pri enosmerni različici moramo prečkati dano puščavo, pri dvosmerni pa moramo biti sposobni se tudi vrnit na prvotno mesto.
+
+PREJŠNJA DELA
+Prve rešitve tega problema so bile predstavljene leta 1947 s strani Phipps, C. G. in Nathan Jacob Fine. Veliko lažje je določiti največjo razdaljo, ki jo lahko prevozimo z določeno količino goriva kot najmanjšo 
+količino goriva, ki je potrebna za premagovanje določene razdalje. Fine je rešil enosmerni problem, Phipps pa dvosmernega in predstavil alternativno različico s karavano
+avtomobilov, ki si lahko delijo gorivo, od katerih mora le eden dokončati potovanje. Druge različice tega problema so v [1,2,4-6].
+Z enim litrom goriva lahko prevozimo $1/2$ kilometra in se vrnemo. Z dvema litroma lagko gremo $1/4$ kilometra, tam shranimo $1/2$ litra goriva in se vrnemo. 
+Potem se peljemo $1/4$ kilometra, poberemo $1/4$ litra, se peljemo $1/2$ kilometra ter se vrnemo in poberemo preostalo $1/4$ litra in se vrnemo na začetek.
+S tremi litri, lahko prevozimo $1/6 + 1/4 + 1/2$ kilometrov, s postajami na $1/6$ in $1/6 + 1/4$  kilometrih od začetka. V splošnem lahko z $n$ litri goriva 
+prevozimo $1/2 + 1/4 + 1/6 + \dots + 1/(2n)$ kilometrov, z $n-1$ postajami na razdaljah $1/(2n), 1/(2n-1), \dots , 1/4$. Med vožnjo nikoli ne nosimo več goriva, 
+kot je potrebno, da dosežemo začetek ali postajo. Vsak premik naprej začnemo s polnim tankom. Da bi našli najmanjšo količino goriva, potrebno za premaganje določene razdalje, 
+poiščemo največjo vsoto tega zaporedja, ki je manjša ali enaka dani razdalji in shranimo goriva na teh lokacij od zadaj naprej. Potem pa naredimo toliko voženj, kolikor 
+je potrebnih, da shranimo določeno količino goriva na prvi postjai. 
+Količina goriva potrebnega, da prevozimo $d$ kilometrov in se vrnemo je $O(e^(2d))$ litrov [7].  Torej je cena goriva približno $7,389^d$ litrov, za velike $d$.
+
+NEZNANA RAZDALJA IN KONKUREČNO RAZMERJE
+Vsa prejšnja dela na tem problemu so temeljila na tem, da poznamo razdaljo, ki jo želimo premagat. Mi gledamo optimalno strategijo, kadar ne poznamo razdalje. 
+Da ocenimo takšno optimalno strategijo, uporabimo konkurenčno razmerje. Tak pristop se uporablja, kadar se analizira algoritem z manjkajočimi ključnimi podatki za izračun.
+Konkurenčno razmarje za takšnen problem je razmerje med stroškom za določeno razdaljo in med
+optimalnim stroškom, če bi razdaljo poznali vnaprej. Najslabše konkurenčno razmerje je maksimum teh razmerij čez vse možne razdalje, optimalen algoritem pa je ta, kjer je ta 
+maksimum najmanjši.
+
+PREGLED
+Na začetku pokažemo, da nobena strategija z enakomerno razdeljenimi postajami ne doseže končnega konkurenčnega razmerja. Nato pokažemo, da 
+je možno vsako fiksno zaporedje postaj pretvoriti v enakomerno razporejene postaje, brez da bi izgubili na uspešnosti. Nato uvedemo iterativno strategijo, kjer avto prepotuje zaporedje vedno daljših razdalj 
+z uporabo znane optimalne strategije za vsako razdaljo, kjer izprazni vse postaje med ponovitvami. Na koncu pokažemo, da eno optimalno zaporedje iteracij podvoji stroške vsake 
+predhodne ponovitve in poveča razdaljo za malo manj kot tretjino kilometra vsako iteracijo.
+
+STRATEGIJE S FISKNIM ZAPOREDJEM POSTAJ 
+Najenostavnejša strategija bi fixno? zaporedno postavljala postaje, dokler ne pridemo do cilja. Da čim prej dosežemo cilj, si želimo čim dlje potovati, brez da bi zmanjšali učinkovitost. 
+Za dano zaporedje postaj definiramo našo pot. Predpostavimo, da smo na postaji, s $p$ označimo razdaljo do predhodne postaje in skupno količino goriva v avtu in na postaji s $f$ litri.
+Če velja $f - p \geq 1$, potem gremo naprej s polnim tankom. Če to ne velja, potem gremo nazaj s $p$ litri. Če smo na prvi postaji, štejemo kot prvo postajo začetek. S takšnim pristopom 
+se vračamo z minimalno potrebno količino goriva, da pridemo do prve postaje in vedno nadaljujemo do začetka, naprej pa se premikamo s polnim tankom.   
