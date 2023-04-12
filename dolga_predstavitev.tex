@@ -120,7 +120,8 @@
     \frametitle{Učinkovitost strategije}
     Učinkovitost strategije ocenimo s "konkurenčnim razmerjem v najslabšem primeru", ki je značilen za ocenjevanje učinkovitosti pri 
     problemih, kjer ključne informacije niso znane vnaprej. Definiran je kot: 
-    $$\frac{\text{Najvišja cena z danim algoritmom glede na vse možne razdalje}}{O(e^{2d})} $$
+    $$\frac{\text{Najvišja cena z danim algoritmom glede na vse možne razdalje}}{\text{Optimalna cena, če poznamo razdaljo apriori}} $$
+    V našem primeru je za velike razdalje $d$ optimalna cena približno $7.389^d$.
 \end{frame}
 
 
@@ -181,7 +182,7 @@
  \begin{frame}
     \frametitle{Enakomerno razporejene postaje}
     \begin{izrek}
-        Pri razvrščanju naprej z enakomerno razporejenimi postajami $\frac{1}{k}$ narazen, asimptotična
+        Pri razvrščanju vnaprej z enakomerno razporejenimi postajami $\frac{1}{k}$ narazen, asimptotična
         cena za doseganje dane razdalje raste eksponentno z razdaljo, in osnova eksponenta je omejena od spodaj z
          $(\frac{k}{k-2})^k$
     \end{izrek}
@@ -203,7 +204,7 @@
     \begin{Proof}
         Pogledamo poljubne tri sosednje postaje $x$, $y$ in $z$, pri čemer je $x$ najbližja začetku. Pri poljubni rešitvi danega problema, bo določeno število skokov med $x$ in 
         $y$ ter med $y$ in $z$. V optimalni rešitvi se bo vsak skok začel s polnim rezervoarjem. Število skokov je določeno s količino goriva potrebnega v $z$. 
-        Neodvisno od zaporedja skokov je končno število skokov od $x$ do $y$ in od $y$ do $z$ enako $\Leftrightarrow$ v $y$ je vedno dovolj goriva, da potujemo do $z$ s polmin rezervoarjem. 
+        Neodvisno od zaporedja skokov je končno število skokov od $x$ do $y$ in od $y$ do $z$ enako $\Leftrightarrow$ v $y$ je vedno dovolj goriva, da potujemo do $z$ s polnim rezervoarjem. 
         Razvrščanje vnaprej upošteva to omejitev, torej je optimalna strategija.
     \end{Proof}
 \end{frame}
@@ -325,7 +326,7 @@
     \begin{proofs}
         Pokazali smo, da je edina optimalna alternativa fiksnemu zaporedju postaj iterativna strategija, ki uporablja
         optimalno strategijo za znano razdaljo, za doseganje vedno večjih razdalj. Lema 4 nam pove, da če obstaja optimalna iterativna 
-        strategija, potem imamo optimalno strategijo, ker so vsa konkurenčna razmerja enaka. Lema 5 nam pove, da imamo v tem primeru 
+        strategija, potem imamo optimalno strategijo, kjer so vsa konkurenčna razmerja enaka. Lema 5 nam pove, da imamo v tem primeru 
         padajoče zaporedje multiplikatorjev iteracij. Multiplikatorji morejo biti vsi večji od $1$, saj mora vsaka iteracija premagati večjo razdaljo. 
         Torej mora zaporedje multiplikatorjev konvergirati k limiti, ki je večja ali enaka $1$. Konkurenčno razmerje za dano iteracijo lahko zapišemo kot 
         vsoto členov, ki vsebujejo multiplikator za to iteracijo, število $1$ ter zaporedje, kjer so členi recipročne vrednosti produkta vedno daljšega zaporedja multiplikatorjev.
@@ -385,7 +386,7 @@
         Iter. & Gorivo & Razdalja & Dodana razd. & Konk. raz. & Raz. goriva \\
         \midrule
         1 & 1 & 0.5 & & &  \\
-        2 & 2 & 0.75 & 0.25 & 2.5 &  \\
+        2 & 2 & 0.75 & 0.25 & 2.5 & 2 \\
         3 & 4 & 1.041667 & 0.291667 & 3.208333 & 2 \\
         4 & 8 & 1.358929 & 0.317262 & 3.591369 & 2 \\
         5 & 16 & 1.690364 & 0.331435 & 3.792141 & 2 \\
@@ -395,7 +396,7 @@
         9 & 256 & 3.062172 & 0.345598 & 3.986788 & 2 \\
         10 & 512 & 3.408258 & 0.346086 & 3.99339 & 2 \\
         11 & 1024 & 3.754588 & 0.34633 & 3.996694 & 2 \\
-        12 & 2048 & 3.754588 & 0.34633 & 3.998347 & 2 \\
+        12 & 2048 & 4.101039 & 0.346451 & 3.998347 & 2 \\
         \bottomrule
         \end{tabular}
         \end{table}

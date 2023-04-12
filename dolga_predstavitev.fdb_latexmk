@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1680870917 "c:/Users/Justin/FMF/Preckanje-puscave-neznane-velikosti/dolga_predstavitev.tex" "dolga_predstavitev.pdf" "dolga_predstavitev" 1680870921 0
+["pdflatex"] 1681320811 "c:/Users/Justin/FMF/Preckanje-puscave-neznane-velikosti/dolga_predstavitev.tex" "dolga_predstavitev.pdf" "dolga_predstavitev" 1681320823 0
   "C:/Users/Justin/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1680365565 82686 2381c3433487640bf26aa76a10db7eb2 ""
   "C:/Users/Justin/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1677316351 10788482 66306c7377e0de2c9e7d5523ce165913 ""
   "C:/Users/Justin/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc" 1458473887 4993 80dc9bab7f31fb78a000ccfed0e27cab ""
@@ -253,11 +253,11 @@
   "C:/Users/Justin/AppData/Local/Programs/MiKTeX/tex/latex/ulem/ulem.sty" 1578651445 15682 94f55b803e160cf7fb6e4d77d07cfe1d ""
   "C:/Users/Justin/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/Justin/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1656236890 56148 51a9a8571c07b9921892ae11063ae853 ""
-  "c:/Users/Justin/FMF/Preckanje-puscave-neznane-velikosti/dolga_predstavitev.tex" 1680870916 23814 525948d3b8a2f51e2e5bc31e3111ddee ""
-  "dolga_predstavitev.aux" 1680870921 6059 967935ee39b90053d5c7de45f3011ec9 "pdflatex"
-  "dolga_predstavitev.nav" 1680870921 3543 d9a20a7c9a058ddfab0f6975ff188aa1 "pdflatex"
-  "dolga_predstavitev.out" 1680870921 154 129d9f58bda6902514270fc5890cf215 "pdflatex"
-  "dolga_predstavitev.tex" 1680870916 23814 525948d3b8a2f51e2e5bc31e3111ddee ""
+  "c:/Users/Justin/FMF/Preckanje-puscave-neznane-velikosti/dolga_predstavitev.tex" 1681320809 23945 d39aca8edb4e021070d1eb8161d07b20 ""
+  "dolga_predstavitev.aux" 1681320822 6059 967935ee39b90053d5c7de45f3011ec9 "pdflatex"
+  "dolga_predstavitev.nav" 1681320822 3543 d9a20a7c9a058ddfab0f6975ff188aa1 "pdflatex"
+  "dolga_predstavitev.out" 1681320822 154 129d9f58bda6902514270fc5890cf215 "pdflatex"
+  "dolga_predstavitev.tex" 1681320809 23945 d39aca8edb4e021070d1eb8161d07b20 ""
   (generated)
   "dolga_predstavitev.aux"
   "dolga_predstavitev.log"

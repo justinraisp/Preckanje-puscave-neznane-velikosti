@@ -52,7 +52,7 @@ def konkurencnoRazmerje(n):
 
 #print(konkurencnoRazmerje(9))
 #print(dvojnaIteracija(9))
-print((prevozenaPot(1,2)+0.5)/0.5)
+#print((prevozenaPot(1,2)+0.5)/0.5)
 def konkurencnoRazmerjeDvojna(n):
     iteracije = [1]
     konkurencnoRazmerje = []
